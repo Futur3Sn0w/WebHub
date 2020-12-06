@@ -6,7 +6,9 @@
 
 <body>
 
-<meta http-equiv="refresh" content="30">
+<meta http-equiv="refresh" content="60">
+
+<div class="imageContainer"></div>
 
 <div class="rightIndicator"></div>
 <div class="timeAndWeather" id="timeAndWeather">
@@ -28,7 +30,6 @@ function showTime(){
         session = "PM";
     }
     
-    h = (h < 10) ? "0" + h : h;
     m = (m < 10) ? "0" + m : m;
     
     var time = h + ":" + m;
