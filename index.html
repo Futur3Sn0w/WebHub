@@ -1,18 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
 <title>WebHubUI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css.css">
 </head>
 
-<body>
+<body onload="loadSettings()">
 
-<meta http-equiv="refresh" content="60">
+<div class="imageContainer" id="imgCont" style="border: 10px solid black; border-radius: 25px;"></div>
 
-<div class="imageContainer"></div>
-
-<div class="rightIndicator"></div>
 <div class="timeAndWeather" id="timeAndWeather">
 <div id="timeDiv"></div>
+</div>
+
+<div class="settingsPanel" id="settingsPanel" style="left: 100%;">
+    <div class="spIndicator" id="spInd" onclick="toggleSettings()"></div>
+    <div class="spContent">
+        <div class="spcBorder">
+            <div class="spcBox spc1" onclick="showHideCorners()">Toggle corners</div>
+            <div class="spcBox spc2" onclick="showHideBorder()">Toggle border</div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -41,6 +51,68 @@ function showTime(){
 }
 
 showTime();
+</script>
+
+<script>
+    var spi = document.getElementById("spInd");
+    var spane = document.getElementById("settingsPanel");
+    var imgc = document.getElementById("imgCont");
+
+    function toggleSettings() {
+        if (spane.style.left === "100%") {
+            spane.style.left = "59%"
+        } else{
+            spane.style.left = "100%"
+        }
+    }
+
+    function showHideBorder() {
+        if (imgc.style.border === "10px solid black") {
+            imgc.style.border = "none"
+            document.cookie = "border=no"
+        } else{
+            imgc.style.border = "10px solid black"
+            document.cookie = "border=yes"
+        }
+    }
+
+    function showHideCorners() {
+        if (imgc.style.borderRadius === "25px") {
+            imgc.style.borderRadius = "0"
+            document.cookie = "corners=no"
+        } else{
+            imgc.style.borderRadius = "25px"
+            document.cookie = "corners=yes"
+        }
+    }
+</script>
+
+<script>
+
+    function loadSettings() {
+        const borderCookie = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('border='))
+                .split('=')[1];
+
+        const cornerCookie = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('corners='))
+                .split('=')[1];
+
+        if (borderCookie === "yes") {
+            imgc.style.border = "10px solid black"
+        } else {
+            imgc.style.border = "none"
+        }
+
+        if (cornerCookie === "yes") {
+            imgc.style.borderRadius = "25px"
+        } else {
+            imgc.style.borderRadius = "0"
+        }
+    }
+
 </script>
 
 </body>
